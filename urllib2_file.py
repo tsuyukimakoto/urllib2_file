@@ -99,12 +99,14 @@ def send_data(v_vars, v_files, boundary, sock=None):
     for (k, v) in v_files:
         fd = v
     	# Special case for StringIO
-        if fd.__module__ in ("StringIO", "cStringIO"):
-            name = k
-            fd.seek(0, 2) # EOF
-            file_size = fd.tell()
-            fd.seek(0) # START
-        else:
+        try:
+            if fd.__module__ in ("StringIO", "cStringIO"):
+                name = k
+                fd.seek(0, 2) # EOF
+                file_size = fd.tell()
+                fd.seek(0) # START
+                #else:
+        except:
             file_size = os.fstat(fd.fileno())[stat.ST_SIZE]
         name = fd.name.split('/')[-1]
         if isinstance(name, unicode):
