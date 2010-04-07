@@ -131,12 +131,12 @@ def send_data(v_vars, v_files, boundary, sock=None):
             if sock:
                 sock.send(chunk)
         l += file_size
-    buffer='\r\n'
-    buffer += '--%s--\r\n' % boundary
-    buffer += '\r\n'
-    if sock:
-        sock.send(buffer)
-    l += len(buffer)
+        buffer='\r\n'
+        buffer += '--%s--\r\n' % boundary
+        buffer += '\r\n'
+        if sock:
+            sock.send(buffer)
+        l += len(buffer)
     return l
 
 # mainly a copy of HTTPHandler from urllib2
